@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <link rel="help" href="https://github.com/w3c/pointerevents/issues/327">
+<style>
+div.box {
+  margin: 5px;
+  padding: 20px;
+  float: left;
+  background-color:green;
+}
+#grey {
+  width: 50px;
+  height: 50px;
+}
+</style>
+</head>
+<body>
+<div id="grey" class="box" style="background-color:grey">
+  <div id="green" class="box"></div>
+</div>
+
+<script>
+var greyDiv = document.getElementById("grey");
+var greenDiv = document.getElementById("green");
+
+greenDiv.addEventListener("pointerdown",(e)=>{
+  console.log("pointerdown@green");
+  if(greenDiv.hasPointerCapture(e.pointerId)){
+    console.log("greenDiv has pointer capture");
+    greenDiv.releasePointerCapture(e.pointerId);
+  }
+});
+
+greyDiv.addEventListener("pointerdown", (e)=>{
+  console.log("pointerdown@grey");
+  greyDiv.setPointerCapture(e.pointerId);
+});
+
+greyDiv.addEventListener("gotpointercapture",(e)=>{
+  console.log("greyDiv - gotpointercapture");
+});
+
+greyDiv.addEventListener("lostpointercapture",(e)=>{
+  console.log("greyDiv - lostpointercapture");
+});
+
+greenDiv.addEventListener("gotpointercapture",(e)=>{
+  console.log("greenDiv - gotpointercapture");
+});
+
+greenDiv.addEventListener("lostpointercapture",(e)=>{
+  console.log("greenDiv - lostpointercapture");
+});
+
+greenDiv.addEventListener("pointermove", (e)=>{
+  console.log("greenDiv - pointermove");
+});
+
+greenDiv.addEventListener("pointerup", (e)=>{
+  console.log("greenDiv - pointerup");
+});
+
+greyDiv.addEventListener("pointermove", (e)=>{
+  console.log("greyDiv - pointermove");
+});
+
+greyDiv.addEventListener("pointerup", (e)=>{
+  console.log("greyDiv - pointerup");
+});
+
+document.addEventListener("pointerup", (e)=>{
+  console.log(`document - pointerup - ${e.target.id}`);
+});
+
+</script>
+</body>
+</html>
