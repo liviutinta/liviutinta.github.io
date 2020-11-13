@@ -5,7 +5,7 @@
   'use strict';
   let target = document.getElementById("target");
   let log=document.getElementById("log");
-  let events = ["mousedown", "mouseup", "click"];
+  let events = ["mouseover", "mousedown", "mouseup", "click"];
   events.forEach((ev) => target.addEventListener(ev, (e)=>{
     console.log(ev);
     let eventDiv = document.createElement("div");
