@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>ClientX/ClientY for mousedown/click/mouseup events</h1>
+
+<p>This is a repro for <a href="crbug.com/1182909">crbug.com/1182909</a>, trying to see if clientX,clientY for
+mousedown and click events are the same (or similar)</p>
+<p>In order to send click event one needs to wait for mousedown/mouseup events. So it seems more likely
+that the click coordinates be closer to mouseup. However I couldn't find any guarantees.</p>
+
+<p>To reproduce please click on the button below, without releasing the left button. Move the mouse slightly inside the button and release.
+You will see the coordinates clientX/clientY be different between mousedown/click events.</p>
+
+<button id="button">Press left button on me, drag a little and release button</button>
+
+<div id="log"></div>
+
+<script>
+let b = document.getElementById("button");
+let log = document.getElementById("log");
+["mousedown", "click", "mouseup"].forEach(event_name=>b.addEventListener(event_name, (e)=>{
+  let logMessage = `${event_name} clientX = ${Math.floor(e.clientX)}, clientY = ${Math.floor(e.clientY)}`;
+  console.log(logMessage);
+  let newLogEntry = document.createElement("p");
+  newLogEntry.appendChild(document.createTextNode(logMessage));
+  log.appendChild(newLogEntry);
+}));
+</script>
+
+</body>
+</html>
