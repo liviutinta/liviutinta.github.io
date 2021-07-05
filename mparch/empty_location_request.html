@@ -1,0 +1,10 @@
+<script>
+  window.addEventListener('load', (e) =>{
+    navigator.geolocation.getCurrentPosition(function(stream){
+      console.log("Permission Granted");
+    }, function(err){
+      console.log("error:" + err.message);
+      console.log("Permission Denied");
+    });
+  });
+</script>
